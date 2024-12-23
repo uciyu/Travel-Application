@@ -39,7 +39,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # gemを追記
-gem 'sorcery', '0.16.3'
+gem 'sorcery', '0.17.0'
 gem 'rails-i18n', '~> 7.0.0'
 
 group :development, :test do
