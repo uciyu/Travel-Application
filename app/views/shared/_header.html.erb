@@ -15,10 +15,10 @@
 
     <ul class="flex space-x-4">
       <li>
-        <%= link_to 'ログアウト', '#', class: "text-gray-700 hover:text-blue-500" %>
+        <%= link_to 'ログアウト', logout_path, class: "text-gray-700 hover:text-blue-500" ,data: { turbo_method: :delete } %>
       </li>
       <li class="relative">
-        <%= link_to '#', class: 'text-gray-800 hover:text-blue-500' do %>
+        <%= link_to logout_path, class: 'text-gray-800 hover:text-blue-500' do %>
           プロフィール
         <% end %>
       </li>

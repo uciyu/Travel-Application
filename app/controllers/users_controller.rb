@@ -8,6 +8,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      # ユーザーを自動的にログインする処理を追加
+      session[:user_id] = @user.id
       redirect_to root_path
     else
       render :new
