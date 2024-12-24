@@ -3,21 +3,25 @@
   <div class="mb-3">
     <div class="w-full lg:w-2/3 mx-auto">
       <h1 class="text-2xl font-bold">記録詳細</h1>
-      <article class="bg-white shadow-md rounded-lg">
+      <%= link_to '一覧に戻る', records_path, class: "text-gray-1000 hover:text-blue-500" %>
+        <article class="bg-white shadow-md rounded-lg">
         <div class="p-4">
           <div class="flex">
             <div class="w-2/3 pl-4">
               <h3 class="inline text-xl font-semibold"><%= @record.title %></h3>
-              <ul class="flex space-x-4">
-                <li><%= "by #{@record.user.name}" %></li>
-                <li><%= l @record.created_at, format: :long %></li>
-              </ul>
-              <div class='flex justify-end'>
-                <%= link_to "#", id: "button-edit-#{@record.id}" do %>
-                  <i class='bi bi-pencil-fill'></i>
-                <% end %>
-                <%= link_to "#", id: "button-delete-#{@record.id}", class: "ml-2" do %>
-                  <i class="bi bi-trash-fill"></i>
+                <ul class="flex space-x-4">
+                  <li><%= "by #{@record.user.name}" %></li>
+                  <li><%= l @record.created_at, format: :long %></li>
+                </ul>
+                <% if current_user.id == @record.user_id %>
+                  <ul class="flex space-x-4">
+                    <li>
+                      <%= link_to '編集', edit_record_path(@record), class: "text-gray-700 hover:text-blue-500" %>
+                    </li>
+                    <li>
+                      <%= link_to '削除', record_path(@record) , class: "text-gray-700 hover:text-blue-500", data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
+                    </li>
+                  </ul>
                 <% end %>
               </div>
             </div>
