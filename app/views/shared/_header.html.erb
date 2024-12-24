@@ -1,7 +1,7 @@
 <header class="bg-white shadow">
   <p class="text-center py-4">めざせ！全国制覇！</p>
   <nav class="flex items-center justify-between p-4">
-    <%= link_to 'ホーム', '/', class: 'text-xl font-bold' %>
+    <%= link_to 'ホーム', '/', class: 'text-xl font-bold hover:text-blue-500' %>
 
 
     
@@ -17,11 +17,13 @@
       <li>
         <%= link_to 'ログアウト', logout_path, class: "text-gray-700 hover:text-blue-500" ,data: { turbo_method: :delete } %>
       </li>
+      <!--
       <li class="relative">
-        <%= link_to logout_path, class: 'text-gray-800 hover:text-blue-500' do %>
+        <%= link_to '#', class: 'text-gray-800 hover:text-blue-500' do %>
           プロフィール
         <% end %>
       </li>
+      -->
     </ul>
   </nav>
 </header>

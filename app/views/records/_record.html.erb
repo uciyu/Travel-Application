@@ -1,3 +1,4 @@
+<!--記録一覧の中の、記録一つひとつの表示-->
 <div class="col-span-1 mb-3">
 <div id="record-id-<%= record.id %>">
   <div class="bg-white rounded-lg shadow-md">
@@ -6,15 +7,16 @@
         <h4 class="text-lg font-semibold">
           <%= link_to record.title, record_path(record) %>
         </h4>
-        <ul class="flex space-x-4">
-          <li>
-            <%= link_to '編集', '#', class: "text-gray-700 hover:text-blue-500" %>
-          </li>
-          <li>
-            <%= link_to '削除', '#', class: "text-gray-700 hover:text-blue-500" %>
-          </li>
-        </ul>
-      </div>
+        <% if current_user.id == record.user_id %>
+          <ul class="flex space-x-4">
+            <li>
+              <%= link_to '編集', edit_record_path(record), class: "text-gray-700 hover:text-blue-500" %>
+            </li>
+            <li>
+              <%= link_to '削除', record_path(record) , class: "text-gray-700 hover:text-blue-500", data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
+            </li>
+          </ul>
+      <% end %>
       <ul class="list-inline mt-2">
         <li class="inline-flex items-center"><i class="bi bi-person"></i><%= record.user.name %></li>
         <li class="inline-flex items-center ml-4"><i class="bi bi-calendar"></i><%= record.created_at %></li>

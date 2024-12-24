@@ -18,6 +18,28 @@ class RecordsController < ApplicationController
     end
   end
 
+  # 編集
+  def edit
+    @record = current_user.records.find(params[:id])
+  end
+
+  # 更新
+  def update
+    @record = current_user.records.find(params[:id])
+    if @record.update(record_params)
+      redirect_to record_path(@record), success: '更新しました'
+    else
+      flash.now[:danger] = '更新できませんでした'
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    record = current_user.records.find(params[:id])
+    record.destroy!
+    redirect_to records_path, success: '記録を削除しました', status: :see_other
+  end
+
   # 記録詳細の表示
   def show
     @record = Record.find(params[:id])
