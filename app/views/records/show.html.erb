@@ -10,7 +10,6 @@
             <div class="w-2/3 pl-4">
               <h3 class="inline text-xl font-semibold"><%= @record.title %></h3>
                 <ul class="flex space-x-4">
-                  <li><%= "by #{@record.user.name}" %></li>
                   <li><%= l @record.created_at, format: :long %></li>
                 </ul>
                 <% if current_user.id == @record.user_id %>
@@ -29,16 +28,6 @@
           <p class="mt-4"><%= simple_format(@record.body) %></p>
         </div>
       </article>
-    </div>
-  </div>
-  <%# コメントフォーム %>
-  <div class="mb-5">
-    <div class="w-full lg:w-2/3 mx-auto">
-      <table class="table-auto w-full">
-        <tbody id="table-comment">
-          <%# コメント一覧 %>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>

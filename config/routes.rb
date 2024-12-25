@@ -18,5 +18,10 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
   # レコードのルーティング
-  resources :records, only: %i[index new create show edit destroy update] # recordsコントローラーのcreateアクションが動く
+  resources :records, only: %i[index new create show edit destroy update] do # recordsコントローラーのcreateアクションが動く
+    collection do
+      get :record_prefectures
+    end
+  end
+  resources :record_prefectures, only: %i[create destroy]
 end

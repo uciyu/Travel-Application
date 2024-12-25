@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_21_084753) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_25_122914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "prefectures", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "record_prefectures", force: :cascade do |t|
+    t.bigint "record_id"
+    t.bigint "prefecture_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prefecture_id"], name: "index_record_prefectures_on_prefecture_id"
+    t.index ["record_id", "prefecture_id"], name: "index_record_prefectures_on_record_id_and_prefecture_id", unique: true
+    t.index ["record_id"], name: "index_record_prefectures_on_record_id"
+  end
 
   create_table "records", force: :cascade do |t|
     t.string "title", null: false
@@ -35,5 +51,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_21_084753) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "record_prefectures", "prefectures"
+  add_foreign_key "record_prefectures", "records"
   add_foreign_key "records", "users"
 end

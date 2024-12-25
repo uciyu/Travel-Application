@@ -1,5 +1,10 @@
 <!--記録のフォーム-->
 <%= form_with model: record do |f| %>
+  <!--プルダウンの選択肢の回答フォームを作成-->
+  <div class="mb-4">
+    <%= f.label :prefecture_id, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '都道府県を選択' }, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" %>
+  </div>
   <div class="mb-4">
     <%= f.label :title, class: "block text-sm font-medium text-gray-700" %>
     <%= f.text_field :title, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" %>
