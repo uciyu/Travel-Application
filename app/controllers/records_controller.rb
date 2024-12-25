@@ -1,6 +1,15 @@
 class RecordsController < ApplicationController
   def index
-    @records = Record.includes(:user)
+    @searchprefecture = params[:search]
+    # 都道府県IDでフィルタリング 中間テーブルを介して都道府県のテーブルを結合
+    if @searchprefecture.present?
+      @records = current_user.records.joins(:prefectures).where(prefectures: { id: @searchprefecture }).includes(:user)
+    else
+      # 検索条件がない場合は全てのレコードを取得
+      @records = current_user.records.includes(:user)
+    end
+    # 前回選択した都道府県を保持
+    # @prefectures = Prefecture.all
   end
 
   def new
@@ -11,6 +20,7 @@ class RecordsController < ApplicationController
   def create
     @record = current_user.records.build(record_params)
     if @record.save
+      @record.record_prefectures.create(prefecture_id: params[:record][:prefecture_id])
       redirect_to records_path, success: "成功しました"
     else
       flash.now[:danger] = "作成できませんでした"
@@ -27,6 +37,12 @@ class RecordsController < ApplicationController
   def update
     @record = current_user.records.find(params[:id])
     if @record.update(record_params)
+      record_prefecture = @record.record_prefectures.find_by(prefecture_id: params[:record][:prefecture_id])
+      if record_prefecture
+        record_prefecture.update(prefecture_id: params[:record][:prefecture_id])
+      else
+        @record.record_prefectures.create(prefecture_id: params[:record][:prefecture_id])
+      end
       redirect_to record_path(@record), success: '更新しました'
     else
       flash.now[:danger] = '更新できませんでした'
