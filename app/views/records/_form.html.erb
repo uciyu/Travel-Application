@@ -1,14 +1,28 @@
 <!--記録のフォーム-->
 <%= form_with model: record do |f| %>
-  <!--プルダウンの選択肢の回答フォームを作成-->
+  <!--県名 プルダウンの選択肢の回答フォームを作成→チェックボックスに変更-->
   <div class="mb-4">
-    <%= f.label :prefecture_id, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '都道府県を選択' }, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" %>
+    <%= f.label :prefecture_ids, class: "block text-sm font-medium text-gray-700" %>
+    <div class="mt-1 flex flex-wrap">
+      <%= f.collection_check_boxes :prefecture_ids, Prefecture.all, :id, :name do |b| %>
+        <div class="flex items-cente mr-8">
+          <%= b.check_box(class: "mr-1") %>
+          <%= b.label(class: "text-gray-700") %>
+        </div>
+      <% end %>
+    </div>
   </div>
+  <!--タイトル テキストフォームを作成-->
   <div class="mb-4">
     <%= f.label :title, class: "block text-sm font-medium text-gray-700" %>
     <%= f.text_field :title, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500" %>
   </div>
+  <!--行った日付 フォームを作成-->
+  <div class="mb-4">
+  <%= f.label :date, class: "block text-sm font-medium text-gray-700" %>
+  <%= f.date_select :date, class: 'form-control' %>
+  </div>
+  <!--内容 テキストフォームを作成-->
   <div class="mb-4">
     <%= f.label :body, class: "block text-sm font-medium text-gray-700" %>
     <%= f.text_area :body, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-500", rows: "10" %>

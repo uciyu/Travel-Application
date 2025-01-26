@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header {
+    background-color: #FFB266 ; /* オレンジ色のコードを指定 */
+    width: 100%;
+    font-weight: bold; /* 文字を太く */
+    font-size: 20px; /* 文字の大きさ */
+}
+.header a { /* aは個々のリンクの意味 */
+    color: black; /* 文字の色 */
+    font-weight: bold; /* 文字を太く */
+    font-size: 18px; /* 文字の大きさ */
+}
+
+.header a:hover {
+    color: #296c95; /* ホバー時の色 */
+}
+
+.page{
+    background-color: #FFF8E8; /*背景 */
+    margin-bottom: 60px; /* フッターは下から 0px */
+}
+
+.footer {
+    bottom: 0px; /* フッターは下から 0px */
+    background-color: #FFB266 ; /* 背景色 */
+    width: 100%;
+    position: fixed; /* 下の位置に固定 */
+}
+
+.footer a {
+    color: black; /* 文字の色 */
+    font-weight: bold; /* 文字を太く */
+
+}
+
+.footer a:hover {
+    color: #296c95; /*ホバー時の色 */
+}
+
+
+.button {
+    background-color: #FFC950; /* 薄いオレンジの色 */
+    border: none; /* ボーダーを消す */
+    border-radius: 40px; /* 角を丸くする */
+    color: black; /* テキストを透明にする */
+    padding: 10px 10px; /* 上下の余白を10px、左右の余白を10px */
+    cursor: pointer; /* マウスカーソルをポインターに */
+}
+
+.record-border {
+  color: black;
+  border-radius: 8px; /* 角を丸くする */
+  margin: 10px auto;
+  background-color: #FFEDD5; /* 背景色 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-mdに相当する影の設定 */
+  width: 98%;
+}

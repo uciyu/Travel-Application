@@ -1,26 +1,31 @@
 <!--記録一覧の中の、記録一つひとつの表示-->
 <div class="col-span-1 mb-3">
-<div id="record-id-<%= record.id %>">
-  <div class="bg-white rounded-lg shadow-md">
+<div id="record-id-<%= record.id %>" class="record-border" >
+  <div>
     <div class="p-4">
       <div class="flex items-center justify-between">
         <h4 class="text-lg font-semibold">
-          <%= link_to record.title, record_path(record), class: "text-gray-700 hover:text-blue-500" %>
+        <!--ここに都道府県を入れたい→ループ表示させる-->
+          <% record.prefectures.each do |prefecture| %>
+            <span class="text-sm font-medium text-orange-600"><%= prefecture.name %></span> 
+          <% end %></br>
+          <span class="text-lg"><%= link_to record.title, record_path(record), class: "text-gray-700 hover:text-orange-600" %></span> 
         </h4>
-        <% if current_user.id == record.user_id %>
-          <ul class="flex space-x-4">
-            <li>
-              <%= link_to '編集', edit_record_path(record), class: "text-gray-700 hover:text-blue-500" %>
-            </li>
-            <li>
-              <%= link_to '削除', record_path(record) , class: "text-gray-700 hover:text-blue-500", data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
-            </li>
-          </ul>
-      <% end %>
-      <ul class="list-inline mt-2">
-        <li class="inline-flex items-center"><i class="bi bi-person"></i><%= record.user.name %></li>
-        <li class="inline-flex items-center ml-4"><i class="bi bi-calendar"></i><%= record.created_at %></li>
+        <ul class="list-inline mt-2">
+          <li class="inline-flex items-center"><i class="bi bi-person"></i><%= record.user.name %></li>
+          <li class="inline-flex items-center ml-4"><i class="bi bi-calendar"></i><%= record.date ? record.date.strftime('%Y/%m/%d')  : '' %></li>
         </ul>
+        <ul class="flex space-x-4">
+          <% if current_user.id == record.user_id %>
+            <li>
+              <%= link_to '編集', edit_record_path(record), class: "text-gray-700 hover:text-orange-600" %>
+            </li>
+            <li>
+              <%= link_to '削除', record_path(record) , class: "text-gray-700 hover:text-orange-600" , data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
+            </li>
+          <% end %>
+        </ul>
+
     </div>
   </div>
 </div>

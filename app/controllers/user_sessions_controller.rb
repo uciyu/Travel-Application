@@ -9,7 +9,9 @@ class UserSessionsController < ApplicationController
     if @user
       redirect_to root_path
     else
-      render :new
+      # Rails.logger.warn("Login attempt failed: Invalid email or password for email #{params[:email]}")
+      # render :new
+      redirect_to action: :new
     end
   end
 

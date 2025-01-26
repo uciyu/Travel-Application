@@ -37,12 +37,8 @@ class RecordsController < ApplicationController
   def update
     @record = current_user.records.find(params[:id])
     if @record.update(record_params)
-      record_prefecture = @record.record_prefectures.find_by(prefecture_id: params[:record][:prefecture_id])
-      if record_prefecture
-        record_prefecture.update(prefecture_id: params[:record][:prefecture_id])
-      else
-        @record.record_prefectures.create(prefecture_id: params[:record][:prefecture_id])
-      end
+      #   has_many :record_prefectures, dependent: :destroyの記述があるため:prefecture_idsが自動生成される
+      @record.prefecture_ids = params[:record][:prefecture_ids] if params[:record][:prefecture_ids].present?
       redirect_to record_path(@record), success: '更新しました'
     else
       flash.now[:danger] = '更新できませんでした'
@@ -64,6 +60,6 @@ class RecordsController < ApplicationController
   private
 
   def record_params
-    params.require(:record).permit(:title, :body)
+    params.require(:record).permit(:title, :body, :date, :description, prefecture_ids: [])
   end
 end

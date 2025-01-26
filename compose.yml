@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: bash -c "bundle install && bundle exec rails db:prepare && rm -f tmp/pids/server.pid && ./bin/dev"
+    command: bash -c "bundle install && yarn install && bundle exec rails db:prepare && rm -f tmp/pids/server.pid && ./bin/dev" #yarn
     tty: true
     stdin_open: true
     volumes:
@@ -27,6 +27,7 @@ services:
       - node_modules:/myapp/node_modules
     environment:
       TZ: Asia/Tokyo
+    # image: travel-application-web:latest # イメージ名を指定
     ports:
       - "3000:3000"
     depends_on:
@@ -36,3 +37,4 @@ volumes:
   bundle_data:
   postgresql_data:
   node_modules:
+  #   driver: local #追記した
