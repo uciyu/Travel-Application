@@ -39,6 +39,7 @@ class RecordsController < ApplicationController
     if @record.update(record_params)
       #   has_many :record_prefectures, dependent: :destroyの記述があるため:prefecture_idsが自動生成される
       @record.prefecture_ids = params[:record][:prefecture_ids] if params[:record][:prefecture_ids].present?
+      # 複数枚@record.images.attach(params[:record][:images]) if params[:record][:images].present?
       redirect_to record_path(@record), success: '更新しました'
     else
       flash.now[:danger] = '更新できませんでした'
@@ -60,6 +61,6 @@ class RecordsController < ApplicationController
   private
 
   def record_params
-    params.require(:record).permit(:title, :body, :date, :description, prefecture_ids: [])
+    params.require(:record).permit(:title, :body, :date, :description, :image_cache, :image, prefecture_ids: [])
   end
 end

@@ -25,6 +25,7 @@
                 </ul>
                 <% if current_user.id == @record.user_id %>
                   <%= simple_format(@record.body) %>
+                  <%= image_tag @record.image.to_s %>
                 <% end %>
               </div>
             </div>
