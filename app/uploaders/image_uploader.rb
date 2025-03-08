@@ -4,8 +4,16 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
   # include CarrierWave::Vips
 
+  if Rails.env.development?
+    storage :fog
+  elsif Rails.env.test?
+    storage :fog
+  else
+    storage :fog
+  end
+
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  # コメントアウトしてみたstorage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
@@ -13,6 +21,20 @@ class ImageUploader < CarrierWave::Uploader::Base
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
+
+  # 最大500×500px
+  include CarrierWave::MiniMagick
+  process resize_to_limit: [500, 500]
+  
+  # アップロードできるファイルを jpg, jpeg, png, gif のみにする
+  def extension_allowlist
+    %w(jpg jpeg gif png)
+  end
+
+  # ここでファイル形式を指定する
+  #def filename
+    #original_filename if original_filename
+  #end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
@@ -36,9 +58,6 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_allowlist
-  #   %w(jpg jpeg gif png)
-  # end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
