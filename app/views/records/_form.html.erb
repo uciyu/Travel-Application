@@ -26,7 +26,7 @@
   <div class="mb-4">
     <%= f.label :images, "画像" %>
     <%= f.file_field :images, multiple: true, accept: "image/*" %>
-    <%= f.hidden_field :images_cache %>
+    <!--<%= f.hidden_field :images_cache %>-->
 
     <div class="flex flex-wrap gap-1">
       <% @record.images.each do |image| %>
@@ -37,9 +37,6 @@
       <% end %>
     </div>
   </div>
-
-
-
 
   <%= f.submit nil, class: "mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" %>
 <% end %>
