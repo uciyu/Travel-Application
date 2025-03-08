@@ -21,6 +21,9 @@ class RecordsController < ApplicationController
     @record = current_user.records.build(record_params)
     if @record.save
       @record.record_prefectures.create(prefecture_id: params[:record][:prefecture_id])
+      #params[:record][:image].each do |image|
+       #post.memories.create(image: image, post_id: post.id)
+      #end
       redirect_to records_path, success: "成功しました"
     else
       flash.now[:danger] = "作成できませんでした"
@@ -33,13 +36,32 @@ class RecordsController < ApplicationController
     @record = current_user.records.find(params[:id])
   end
 
+  def destroy_image
+    @record = current_user.records.find(params[:id])
+    images_identifiers = @record.images_identifiers # 画像の配列
+    image_identifier = params[:image_identifier] # 削除ボタンを押した画像名
+    images_identifiers = images_identifiers - [image_identifier] # 画像の配列－削除ボタンを押した画像名の配列
+    @record.images = images_identifiers # imagesに新しい配列を上書き保存
+    @record.save # モデルを保存して変更を反映
+    redirect_to edit_record_path(@record)
+  end
+
+
   # 更新
   def update
+
     @record = current_user.records.find(params[:id])
-    if @record.update(record_params)
-      #   has_many :record_prefectures, dependent: :destroyの記述があるため:prefecture_idsが自動生成される
+    existing_images = @record.images # 既存の画像
+    new_images = params[:record][:images] # 新しく追加された画像
+
+    if @record.update(update_params)
+      # has_many :record_prefectures, dependent: :destroyの記述があるため:prefecture_idsが自動生成される
       @record.prefecture_ids = params[:record][:prefecture_ids] if params[:record][:prefecture_ids].present?
+      # @record.images.attach(params[:record][:images]) if params[:record][:images].present?
+      @record.images = existing_images + new_images  # 既存の画像と新しい画像を合体
+      @record.save # 画像を保存
       redirect_to record_path(@record), success: '更新しました'
+    
     else
       flash.now[:danger] = '更新できませんでした'
       render :edit, status: :unprocessable_entity
@@ -60,6 +82,10 @@ class RecordsController < ApplicationController
   private
 
   def record_params
+    params.require(:record).permit(:title, :body, :date, :description, {images: []}, :images_cache, prefecture_ids: [])
+  end
+
+  def update_params
     params.require(:record).permit(:title, :body, :date, :description, prefecture_ids: [])
   end
 end

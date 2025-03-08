@@ -20,6 +20,11 @@ gem "stimulus-rails"
 gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+# 追記２つ
+gem 'carrierwave'
+gem 'fog-aws'
+# Railsアプリケーションでdotenvを使用して環境変数を読み込み
+gem 'dotenv'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -36,7 +41,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+# gem "image_processing", ">= 1.2"
 
 # gemを追記
 gem 'sorcery', '0.16.3'
@@ -51,6 +56,12 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  # デバック
 end
 
 group :development do

@@ -14,14 +14,20 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "tops#index"
   resources :users, only: %i[new create]
-  resources :records
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
+  
   # レコードのルーティング
-  resources :records, only: %i[index new create show edit destroy update] do # recordsコントローラーのcreateアクションが動く
+  resources :records do # recordsコントローラーのcreateアクションが動く
     collection do
       get :record_prefectures
+    end
+    member do
+      get 'images'  # 画像を取得するルート
+    end
+    member do
+      get 'destroy_image'
     end
   end
   resources :record_prefectures, only: %i[create destroy]
