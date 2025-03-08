@@ -38,14 +38,12 @@ class RecordsController < ApplicationController
 
   def destroy_image
     @record = current_user.records.find(params[:id])
-    # recordカラムに保存された画像のURLを使って特定
-    image_url = params[:image_url] 
-    raise
-    if @record.images.include?(image_url) # URLが存在するか確認
-      @record.images.delete(image_url) # URLを削除
-      @record.save # モデルを保存して変更を反映
-    end
-    redirect_to destroy_image_record_path(@record)
+    images_identifiers = @record.images_identifiers # 画像の配列
+    image_identifier = params[:image_identifier] # 削除ボタンを押した画像名
+    images_identifiers = images_identifiers - [image_identifier] # 画像の配列－削除ボタンを押した画像名の配列
+    @record.images = images_identifiers # imagesに新しい配列を上書き保存
+    @record.save # モデルを保存して変更を反映
+    redirect_to edit_record_path(@record)
   end
 
 

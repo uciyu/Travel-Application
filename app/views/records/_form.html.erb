@@ -32,7 +32,7 @@
       <% @record.images.each do |image| %>
         <div class="flex-col">
           <%= image_tag(image.url, style: "height: 100px; width: 100px; object-fit: cover;") %>
-          <%= link_to '削除', destroy_image_record_path(@record, image_url: image.url), turbo_method: :delete %>
+          <%= link_to '削除', destroy_image_record_path(@record, image_url: image.url, image_identifier: image.identifier), turbo_method: :delete %>
         </div> 
       <% end %>
     </div>
