@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
   
+  # 集計データをJSON形式で取得
+  get 'prefectures/data', to: 'prefectures#data'
   # レコードのルーティング
   resources :records do # recordsコントローラーのcreateアクションが動く
     collection do
