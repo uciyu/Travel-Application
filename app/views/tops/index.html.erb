@@ -3,6 +3,85 @@
 -->
 <div class="top-wrapper"> 
   <div class="top-inner-text"> 
-  <%= link_to "新規作成", new_record_path, class: "text-gray-1000 hover:text-blue-500" %>
+    <%= link_to "新規作成", new_record_path, class: "text-gray-1000 hover:text-blue-500" %>
+  </div>
+
+  <!--マップの表示 mx-autoで中央ぞろえにしようとしたが反映されず-->
+  <div class="mx-auto">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      google.charts.load('current', {
+      'packages':['geochart'],
+      });
+
+      google.charts.setOnLoadCallback(drawMap);
+
+      function drawMap() {
+        var data = [
+          ["都道府県","回数"],
+          ["北海道", <%= @hokkaido_count %>],
+          ["青森", <%= @aomori_count %>],
+          ["秋田", <%= @akita_count %>],
+          ["岩手", <%= @iwate_count %>],
+          ["山形", <%= @yamagata_count %>],
+          ["宮城", <%= @miyagi_count %>],
+          ["福島", <%= @hukushima_count %>],
+          ["群馬", <%= @gunma_count %>],
+          ["栃木", <%= @tochigi_count %>],
+          ["茨城", <%= @ibaragi_count %>],
+          ["埼玉", <%= @saitama_count %>],
+          ["東京", <%= @tokyo_count %>],
+          ["神奈川", <%= @kanagawa_count %>],
+          ["千葉", <%= @chiba_count %>],
+          ["新潟", <%= @nigata_count %>],
+          ["富山", <%= @toyama_count %>],
+          ["石川", <%= @ishikawa_count %>],
+          ["福井", <%= @hukui_count %>],
+          ["岐阜", <%= @gihu_count %>],
+          ["長野", <%= @nagano_count %>],
+          ["山梨", <%= @yamanashi_count %>],
+          ["愛知", <%= @aichi_count %>],
+          ["静岡", <%= @shizuoka_count %>],
+          ["兵庫", <%= @hyogo_count %>],
+          ["京都", <%= @kyoto_count %>],
+          ["大阪", <%= @osaka_count %>],
+          ["奈良", <%= @nara_count %>],
+          ["和歌山", <%= @wakayama_count %>],
+          ["三重", <%= @mie_count %>],
+          ["山口", <%= @yamaguchi_count %>],
+          ["島根", <%= @shimane_count %>],
+          ["鳥取", <%= @tottori_count %>],
+          ["広島", <%= @hiroshima_count %>],
+          ["岡山", <%= @okayama_count %>],
+          ["愛媛", <%= @ehime_count %>],
+          ["香川", <%= @kagawa_count %>],
+          ["高知", <%= @kochi_count %>],
+          ["徳島", <%= @tokushima_count %>],
+          ["福岡", <%= @hukuoka_count %>],
+          ["佐賀", <%= @saga_count %>],
+          ["長崎", <%= @nagasaki_count %>],
+          ["熊本", <%= @kumamoto_count %>],
+          ["大分", <%= @oita_count %>],
+          ["宮崎", <%= @miyagi_count %>],
+          ["鹿児島", <%= @kagoshima_count %>],
+          ["沖縄", <%= @okinawa_count %>],
+          ];
+
+  <!--GeoChartについて-->
+        var dt = google.visualization.arrayToDataTable(data); <!--配列データをチャートで使用可能な形式に変換するメソッドでdataを変換-->
+        var options = {
+          region: 'JP',  <!--地域-->
+          displayMode: 'regions', <!--regions=塗りつぶし, markers=マーカー -->
+          backgroundColor: '#ebf7fe', <!--背景色-->
+          resolution: 'provinces', <!--都道府県ごとの表示-->
+          colorAxis: {colors: ['#ffffff', '#369961']} <!--階層の色-->
+        };
+        <!--出力するDivを指定して chart を生成-->
+        var chart = new google.visualization.GeoChart(document.getElementById('region-div'));
+        <!--描画-->
+        chart.draw(dt, options);
+      }
+    </script>
+    <div id="region-div" style="width: 900px; height: 500px;"></div>
   </div>
 </div>
